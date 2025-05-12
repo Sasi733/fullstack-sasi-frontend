@@ -8,18 +8,18 @@ const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
   const email = localStorage.getItem('userEmail');
 
-const BACKEND_URL = "https://sasi-login-backend-1.onrender.com"; // ✅ Use this in production
-0
+  const BACKEND_URL = "https://sasi-login-backend-1.onrender.com";
+
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (!isLoggedIn || !email) {
-      alert('Unauthorized access. Please log in.');
-      navigate('/login');
-    } else {
-      fetchDocuments();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (!isLoggedIn || !email) {
+    alert('Unauthorized access. Please log in.');
+    navigate('/login');
+  } else {
+    fetchDocuments();
+  }
+}, [email, fetchDocuments, navigate]);
+
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
@@ -60,11 +60,19 @@ const BACKEND_URL = "https://sasi-login-backend-1.onrender.com"; // ✅ Use this
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-6 bg-gradient-to-br from-blue-900 to-purple-900 text-white">
-      <div className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-xl w-full max-w-3xl animate-fade-in">
+    <div
+      className="flex items-center justify-center w-screen h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: `url('https://i.postimg.cc/qMcHnYM8/Screenshot-2025-05-12-223115.png')`,
+        backgroundColor: '#000',
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-0" />
+
+      <div className="relative z-10 bg-white/10 backdrop-blur-xl p-10 rounded-3xl shadow-2xl w-full max-w-3xl text-white">
         <h2 className="text-4xl font-bold mb-6 text-center">📄 My Dashboard</h2>
 
-        <div className="mb-6">
+        <div className="mb-6 flex flex-col md:flex-row items-center justify-center gap-4">
           <input
             type="file"
             accept="application/pdf"
@@ -73,7 +81,7 @@ const BACKEND_URL = "https://sasi-login-backend-1.onrender.com"; // ✅ Use this
           />
           <button
             onClick={handleUpload}
-            className="ml-4 py-2 px-5 bg-green-600 hover:bg-green-700 rounded-md font-semibold transition-transform transform hover:scale-105"
+            className="py-2 px-5 bg-green-600 hover:bg-green-700 rounded-md font-semibold transition-transform transform hover:scale-105"
           >
             Upload PDF
           </button>

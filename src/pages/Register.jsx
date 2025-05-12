@@ -22,24 +22,34 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div
+      className="flex items-center justify-center w-screen h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: `url('https://i.postimg.cc/cL7Pz5Kd/Screenshot-2025-05-12-224024.png')`,
+        backgroundColor: '#000',
+      }}
+    >
+      {/* Overlay for contrast */}
+      <div className="absolute inset-0 bg-black bg-opacity-60 z-0" />
+
+      {/* Register form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white/20 backdrop-blur-md shadow-2xl p-10 rounded-3xl w-full max-w-md animate-fade-in"
+        className="relative z-10 bg-white/20 backdrop-blur-md shadow-2xl p-10 rounded-3xl w-full max-w-md animate-fade-in text-white"
       >
-        <h2 className="text-3xl font-bold text-white text-center mb-6">Register</h2>
+        <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
 
         {['email', 'phone', 'password'].map((field, idx) => (
           <div className="mb-4" key={idx}>
-            <label className="block text-white mb-1 capitalize">{field}</label>
+            <label className="block mb-1 capitalize">{field}</label>
             <input
               type={field === 'password' ? 'password' : 'text'}
               name={field}
               value={form[field]}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-gray-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
               placeholder={`Enter ${field}`}
+              className="w-full px-4 py-2 rounded-md bg-white/10 text-white placeholder-gray-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition"
             />
           </div>
         ))}
