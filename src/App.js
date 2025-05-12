@@ -15,9 +15,9 @@ function App() {
       </nav>
 
       <Routes>
-        {/* Home Route */}
+        {/* Home Route */} eqhfbefkbef,bhwkacvhgddgkhdfbvsk
         <Route
-          path="/"
+          path="/" 
           element={
             <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 text-white">
               <div className="bg-white/10 backdrop-blur-xl p-10 rounded-2xl shadow-2xl max-w-xl w-full text-center animate-fade-in">
@@ -32,7 +32,7 @@ function App() {
                     to="/register"
                     className="bg-white text-purple-600 px-6 py-2 rounded-lg font-semibold shadow hover:bg-purple-100 transition-all hover:scale-105"
                   >
-                    Register Now
+                    Register Now   
                   </Link>
                   <Link
                     to="/login"

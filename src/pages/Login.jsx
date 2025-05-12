@@ -16,6 +16,8 @@ const Login = () => {
       const res = await axios.post('https://sasi-login-backend-1.onrender.com/api/auth/login', form);
       alert(res.data.message || '✅ Login successful');
       localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', form.email); // ✅ Add this line
+
       navigate('/dashboard');
     } catch (err) {
       alert(err.response?.data?.message || '❌ Login failed');
