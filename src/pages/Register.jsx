@@ -1,6 +1,7 @@
+// src/pages/Register.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockRegister } from '../mockApi';
+import axios from 'axios';
 
 const Register = () => {
   const [form, setForm] = useState({ email: '', phone: '', password: '' });
@@ -14,13 +15,17 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await mockRegister(form);
-      alert(res.message);
+      const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+      const res = await axios.post(`${BASE_URL}/api/auth/register`, form);
+      alert(res.data.message);
       navigate('/login');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
   };
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-800 flex items-center justify-center p-4">

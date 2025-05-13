@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -15,7 +15,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://sasi-login-backend-3.onrender.com/api/auth/login', form);
+      const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+      const res = await axios.post(`${BASE_URL}/api/auth/login`, form);
       login(form.email, res.data.token);
       alert(res.data.message);
     } catch (err) {
@@ -24,6 +25,8 @@ const Login = () => {
   };
 
   return (
+    
+  
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-800 flex items-center justify-center p-4">
       <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-xl shadow-2xl p-10 rounded-3xl w-full max-w-md text-white animate-fade-in">
         <h2 className="text-3xl font-bold text-center mb-6 flex items-center justify-center gap-2">
@@ -79,3 +82,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -14,18 +14,16 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   const fetchDocuments = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-  `https://sasi-login-backend-3.onrender.com/api/documents/user/${user.email}`,
-  {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-    },
-  }
-);
-
+      const res = await axios.get(`${BASE_URL}/api/documents/user/${user.email}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       setDocuments(res.data.documents);
     } catch (err) {
       setError('Failed to fetch documents');
@@ -33,7 +31,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [user.email, user.token]);
+  }, [BASE_URL, user.email, user.token]);
 
   useEffect(() => {
     if (!user) {
@@ -62,17 +60,12 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post(
-  "https://sasi-login-backend-3.onrender.com/api/documents/upload",
-  formData,
-  {
-    headers: {
-      Authorization: `Bearer ${user.token}`,
-      "Content-Type": "multipart/form-data",
-    },
-  }
-);
-
+      const res = await axios.post(`${BASE_URL}/api/documents/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       alert(res.data.message);
       setSelectedFile(null);
       setFileName('');
