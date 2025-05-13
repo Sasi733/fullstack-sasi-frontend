@@ -18,13 +18,14 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `http://localhost:5000/api/documents/user/${user.email}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+  `https://sasi-login-backend-3.onrender.com/api/documents/user/${user.email}`,
+  {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  }
+);
+
       setDocuments(res.data.documents);
     } catch (err) {
       setError('Failed to fetch documents');
@@ -62,15 +63,16 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        'http://localhost:5000/api/documents/upload',
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+  "https://sasi-login-backend-3.onrender.com/api/documents/upload",
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  }
+);
+
       alert(res.data.message);
       setSelectedFile(null);
       setFileName('');
