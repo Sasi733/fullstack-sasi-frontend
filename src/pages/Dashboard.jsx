@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -27,7 +26,7 @@ const Dashboard = () => {
       setDocuments(res.data.documents);
     } catch (err) {
       setError('Failed to fetch documents');
-      console.error('Failed to fetch documents:', err);
+      console.error('Fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -37,11 +36,9 @@ const Dashboard = () => {
     if (!user) {
       alert('Unauthorized access. Please log in.');
       navigate('/login');
-    } else {
-      fetchDocuments();
-      const interval = setInterval(fetchDocuments, 10000);
-      return () => clearInterval(interval);
+      return;
     }
+    fetchDocuments(); // only once on load
   }, [user, navigate, fetchDocuments]);
 
   const handleFileChange = (e) => {
@@ -81,12 +78,12 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-800 flex items-center justify-center p-4">
-      <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl w-full max-w-4xl text-white animate-fade-in">
+      <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl shadow-2xl w-full max-w-4xl text-white">
         <h2 className="text-4xl font-bold mb-6 text-center flex items-center justify-center gap-2">
           <span>📄</span> My Dashboard
         </h2>
 
-        <div className="mb-8 p-6 bg-white/20 rounded-xl">
+        <div className="mb-8 p-6 bg-white/20 rounded-xl animate-fade-in">
           <h3 className="text-xl font-semibold mb-4">Upload New Document</h3>
           {error && <p className="text-red-400 mb-4">{error}</p>}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -140,14 +137,16 @@ const Dashboard = () => {
         <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
           <span>📑</span> Uploaded Documents
         </h3>
-        {loading && <p className="text-white/80 italic">Loading documents...</p>}
+
         <div className="space-y-4 max-h-96 overflow-y-auto">
-          {documents.length === 0 ? (
+          {loading ? (
+            <p className="text-white/80 italic">Loading documents...</p>
+          ) : documents.length === 0 ? (
             <p className="text-white/80 italic">No documents uploaded yet.</p>
           ) : (
-            documents.map((doc, idx) => (
+            documents.map((doc) => (
               <div
-                key={idx}
+                key={doc.fileUrl}
                 className="bg-white/20 rounded-lg p-4 flex justify-between items-center hover:bg-white/30 transition-all transform hover:scale-[1.01]"
               >
                 <div className="truncate w-3/4">
@@ -158,7 +157,7 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <a
-                  href={doc.fileUrl}
+                  href={`${BASE_URL}${doc.fileUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm bg-blue-500 px-3 py-1 rounded-md hover:bg-blue-600 transition flex items-center gap-1"
